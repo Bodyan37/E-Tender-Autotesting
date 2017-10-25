@@ -13,7 +13,6 @@ from core.tools import *
 from core.conditions import *
 from selenium.webdriver.support.ui import Select
 from core.et_data import users
-from chromedriver import CHROMEDRV_PATH
 
 path = "http://40.69.95.23/#/"
 path = "http://192.168.103.42/#/"
