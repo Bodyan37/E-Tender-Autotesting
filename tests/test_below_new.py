@@ -15,7 +15,7 @@ from selenium.webdriver.support.ui import Select
 from core.et_data import users
 
 path = "http://40.69.95.23/#/"
-path = "http://192.168.103.42/#/"
+#path = "http://192.168.103.42/#/"
 
 max_import_time = 180
 
