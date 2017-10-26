@@ -36,6 +36,8 @@ def login(user):
         f('#login').click()
     except (ElementNotVisibleException, TimeoutException):
         visit(path + 'login')
+    print(get_url())
+    print(get_source())
     f('#inputUsername').set_value(users[user])
     f('#inputPassword').set_value('Qq123456')
     f('#btn_submit').click()
