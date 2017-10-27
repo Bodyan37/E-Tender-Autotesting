@@ -244,7 +244,7 @@ class TestViewerSuite(BaseTest):
                 assert str(item.quantity) in f('#item_quantity_{}{}'.format(i, j)).text
 
 
-#@pytest.mark.skip
+@pytest.mark.skip
 class TestProviderSuite(BaseTest):
     def test_tender_search(self, tender):
         login('provider')
