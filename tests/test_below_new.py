@@ -16,6 +16,7 @@ from core.et_data import users
 
 path = "http://40.69.95.23/#/"
 #path = "http://192.168.103.42/#/"
+#path = "http://localhost:6234/#/"
 
 max_import_time = 180
 
@@ -40,6 +41,10 @@ def login(user):
     f('#inputPassword').set_value('Qq123456')
     f('#btn_submit').click()
     until_not(f('.blockUI'), present)
+    try:
+        f('#i_got_it').click()
+    except:
+        pass
 
 
 class TestTenderOwner(BaseTest):
