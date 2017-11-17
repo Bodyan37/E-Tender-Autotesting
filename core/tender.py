@@ -65,6 +65,7 @@ class Item:
 
     def __init__(self):
         self.description = '{}-{}: {}'.format('i', fake.uuid4()[:8], fake.sentence())
+        self.description_en = fake.sentence()
         self.quantity = random.randint(0, 2147483647)
         self.unit = units[random.randint(0, len(units)-1)]
         self.features = [Feature()]
@@ -92,6 +93,7 @@ class Tender:
 
         self.is_multilot = is_multilot
         self.title = fake.sentence()
+        self.title_en = fake.sentence()
         self.description = fake.sentence()
         self.currency = Currency(random.choice(list(currencies.keys())))
         self.vat = vat

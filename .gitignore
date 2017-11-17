@@ -1,3 +1,10 @@
 .idea
 */**/*.pyc
 *.log
+.cache/
+__pycache__/
+allure-results/
+core/__pycache__/
+tests/.cache/
+tests/__pycache__/
+tests/allure-results/

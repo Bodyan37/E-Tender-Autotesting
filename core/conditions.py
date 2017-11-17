@@ -201,5 +201,3 @@ class size_at_least(CollectionCondition):
 
     def actual(self):
         return self.actual_size
-
-

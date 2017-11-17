@@ -18,7 +18,7 @@ def setup(request):
     request.addfinalizer(teardown)
 
 
-@pytest.fixture(scope="session", autouse=True)
+@pytest.fixture(scope="module", autouse=True)
 def create_tender():
     config.tender = Tender(**config.tender_params)
 

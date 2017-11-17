@@ -1,9 +1,7 @@
-from datetime import datetime
 from tests.base_test import *
 from core.conditions import *
-from core.config import max_import_time
 
-procedure = 'belowThreshold'
+procedure = 'aboveThreshold'
 
 
 class TestTenderOwner(BaseTest):
@@ -21,14 +19,7 @@ class TestTenderOwner(BaseTest):
 
 
 class TestViewerSuite(BaseViewerTest):
-
-    def test_enquiry_period_end(self, tender):
-        t = tender.tender_period.start
-        assert t.date+', '+t.time in f('#enquiryEnd').text
-
-    def test_tender_period_start(self, tender):
-        t = tender.tender_period.start
-        assert t.date+', '+t.time in f('#tenderStart').text
+    pass
 
 
 class TestProviderSuite(BaseTest):
@@ -37,8 +28,6 @@ class TestProviderSuite(BaseTest):
         assert search_tender(tender)
 
     def test_add_bid(self, tender):
-
-        time.sleep((tender.tender_period.start.datetime - datetime.now()).seconds + max_import_time)
         add_bids(tender)
 
 if __name__ == '__main__':
