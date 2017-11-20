@@ -39,7 +39,7 @@ class TestProviderSuite(BaseTest):
     def test_add_bid(self, tender):
         time.sleep((tender.tender_period.start.datetime - datetime.now()).seconds + max_import_time)
         refresh()
-        add_bids(tender)
+        add_bids(tender, procedure)
 
 if __name__ == '__main__':
     pass

@@ -28,7 +28,7 @@ class TestProviderSuite(BaseTest):
         assert search_tender(tender)
 
     def test_add_bid(self, tender):
-        add_bids(tender)
+        add_bids(tender, procedure)
 
 if __name__ == '__main__':
     pass

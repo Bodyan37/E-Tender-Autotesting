@@ -162,12 +162,13 @@ def wait_for_export(tender):
 
 
 @pytest.allure.step
-def add_bids(tender):
+def add_bids(tender, procedure):
     until_not(f('.blockUI'), present)
     f('li:nth-child(2) > span').click()
     for i, lot in enumerate(tender.lots):
         until_not(f('.blockUI'), present)
         f('#bidAmount_{}'.format(i)).set_value(lot.lot_value * 0.95 // 1)
-        f('#selfEligible').click() #_{}'.format(i)
-        f('#selfQualified').click()
+        if procedure != 'belowThreshold':
+            f('#selfEligible').click() #_{}'.format(i)
+            f('#selfQualified').click()
         f('#createBid_{}'.format(i)).click()
