@@ -97,12 +97,12 @@ def login(user):
 @pytest.allure.step
 def fill_tender_periods(period, procedure):
     if procedure == 'belowThreshold':
-        f('#enquiryPeriod_endDate_day').set_value(period.start.date)
-        f('#enquiryPeriod_endDate_time').set_value(period.start.time)
-        f('#tenderPeriod_startDate_day').set_value(period.start.date)
-        f('#tenderPeriod_startDate_time').set_value(period.start.time)
-    f('#tenderPeriod_endDate_day').set_value(period.end.date)
-    f('#tenderPeriod_endDate_time').set_value(period.end.time)
+        f('#enquiryPeriod').set_value(period.start.date)
+        f('#enquiryPeriod_time').set_value(period.start.time)
+        f('#startDate').set_value(period.start.date)
+        f('#startDate_time').set_value(period.start.time)
+    f('#endDate').set_value(period.end.date)
+    f('#endDate_time').set_value(period.end.time)
 
 
 @pytest.allure.step
