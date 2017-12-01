@@ -8,6 +8,7 @@ procedure = 'belowThreshold'
 
 class TestTenderOwner(BaseTest):
 
+    @pytest.mark.dependency(name="create")
     def test_create_tender(self, tender):
         login('owner')
         go_to_create(procedure)
@@ -16,10 +17,12 @@ class TestTenderOwner(BaseTest):
         tender.url = get_url()
         assert wait_for_export(tender), "Tender did not export in 5 minutes"
 
+    @pytest.mark.dependency(depends=["create"])
     def test_tender_search(self, tender):
         assert search_tender(tender)
 
 
+@pytest.mark.dependency(depends=["create"])
 class TestViewerSuite(BaseViewerTest):
 
     def test_enquiry_period_end(self, tender):
@@ -31,6 +34,7 @@ class TestViewerSuite(BaseViewerTest):
         assert t.date+', '+t.time in f('#tenderStart').text
 
 
+@pytest.mark.dependency(depends=["create"])
 class TestProviderSuite(BaseTest):
     def test_tender_search(self, tender):
         login('provider')
@@ -39,6 +43,17 @@ class TestProviderSuite(BaseTest):
     def test_add_bid(self, tender):
         time.sleep((tender.tender_period.start.datetime - datetime.now()).seconds + max_import_time)
         refresh()
+        add_bids(tender, procedure)
+
+
+@pytest.mark.dependency(depends=["create"])
+@pytest.allure.testcase("Provider2")
+class TestProviderSuite2(BaseTest):
+    def test_tender_search(self, tender):
+        login('provider2')
+        assert search_tender(tender)
+
+    def test_add_bid(self, tender):
         add_bids(tender, procedure)
 
 if __name__ == '__main__':

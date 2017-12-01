@@ -20,7 +20,7 @@ class Address:
 class Datetime:
 
     def __init__(self, dttm):
-        self.datetime = dttm
+        self.datetime = dttm.timestamp()
         self.date = dttm.strftime("%d-%m-%Y")
         self.time = dttm.strftime("%H:%M")
 

@@ -149,6 +149,7 @@ def go_to_create(procedure):
     Select(f('#chooseProcedureType')).select_by_visible_text(tender_types[procedure])
     f('#goToCreate').click()
 
+
 @pytest.allure.step
 def wait_for_export(tender):
     for i in range(10):
