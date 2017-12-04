@@ -42,9 +42,9 @@ class TestProviderSuite(BaseTest):
         assert search_tender(tender)
 
     def test_add_bid(self, tender):
-        time.sleep((tender.tender_period.start.datetime - datetime.now()).seconds + max_import_time)
+        time.sleep((tender.tender_period.start.datetime - time.time()).seconds + max_import_time)
         refresh()
-        add_bids(tender, procedure)
+        add_bids(tender)
 
 
 @pytest.mark.dependency(depends=["create"])
@@ -55,7 +55,7 @@ class TestProviderSuite2(BaseTest):
         assert search_tender(tender)
 
     def test_add_bid(self, tender):
-        add_bids(tender, procedure)
+        add_bids(tender)
 
 if __name__ == '__main__':
     pass
