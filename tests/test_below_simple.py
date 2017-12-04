@@ -10,9 +10,10 @@ class TestTenderOwner(BaseTest):
 
     @pytest.mark.dependency(name="create")
     def test_create_tender(self, tender):
+        tender.type = 'belowThreshold'
         login('owner')
-        go_to_create(procedure)
-        fill_tender(tender, procedure)
+        go_to_create(tender.type)
+        fill_tender(tender)
         f('#createTender').assure(clickable).click()
         tender.url = get_url()
         assert wait_for_export(tender), "Tender did not export in 5 minutes"

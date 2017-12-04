@@ -60,6 +60,7 @@ class BaseViewerTest(BaseTest):
             assert tender.currency.code in f('#lotCurrency_{}'.format(i)).text
 
     def test_lots_vat(self, tender):
+        assert get_url() == tender.url
         for i, lot in enumerate(tender.lots):
             if tender.vat:
                 assert f('#lotVatInc_{}'.format(i))

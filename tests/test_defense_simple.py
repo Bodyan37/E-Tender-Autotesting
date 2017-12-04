@@ -2,11 +2,12 @@ from tests.base_test import *
 from core.conditions import *
 
 
+@pytest.allure.testcase("TenderOwner")
 class TestTenderOwner(BaseTest):
 
     @pytest.mark.dependency(name="create")
     def test_create_tender(self, tender):
-        tender.type = 'aboveThresholdEu'
+        tender.type = 'defense'
         login('owner')
         go_to_create(tender.type)
         fill_tender(tender)
@@ -20,11 +21,13 @@ class TestTenderOwner(BaseTest):
 
 
 @pytest.mark.dependency(depends=["create"])
+@pytest.allure.testcase("Viewer")
 class TestViewerSuite(BaseViewerTest):
     pass
 
 
 @pytest.mark.dependency(depends=["create"])
+@pytest.allure.testcase("Provider1")
 class TestProviderSuite(BaseTest):
     def test_tender_search(self, tender):
         login('provider')
@@ -36,13 +39,14 @@ class TestProviderSuite(BaseTest):
 
 @pytest.mark.dependency(depends=["create"])
 @pytest.allure.testcase("Provider2")
-class TestProviderSuite(BaseTest):
+class TestProviderSuite2(BaseTest):
     def test_tender_search(self, tender):
         login('provider2')
         assert search_tender(tender)
 
     def test_add_bid(self, tender):
         add_bids(tender)
+
 
 if __name__ == '__main__':
     pass

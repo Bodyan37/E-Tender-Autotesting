@@ -51,19 +51,19 @@ def until(locator, condition):
 
 
 @pytest.allure.step
-def fill_tender(tender, procedure):
+def fill_tender(tender):
     if tender.is_multilot:
         f('#isMultilots').click()
     f('#title').set_value(tender.title)
-    if procedure in ('aboveThresholdEu',):
+    if tender.type in ('aboveThresholdEu',):
         f('#titleEN').set_value(tender.title_en)
     f('#description').set_value(tender.description)
     Select(f('#currency')).select_by_visible_text(tender.currency.name)
     if tender.vat:
         fs('#valueAddedTaxIncluded')[-1].click()
     # TODO Features
-    fill_lots(tender, procedure)
-    fill_tender_periods(tender.tender_period, procedure)
+    fill_lots(tender)
+    fill_tender_periods(tender.tender_period, tender.type)
 
 
 @pytest.allure.step
@@ -106,7 +106,7 @@ def fill_tender_periods(period, procedure):
 
 
 @pytest.allure.step
-def fill_lots(tender, procedure):
+def fill_lots(tender):
     if tender.is_multilot:
         f('#lotRemove_0').click()
     else:
@@ -123,7 +123,7 @@ def fill_lots(tender, procedure):
         for j, item in enumerate(lot.items):
             f('#addLotItem_{}'.format(i)).click()
             f('#itemsDescription{}{}'.format(i, j)).set_value(item.description)
-            if procedure in ('aboveThresholdEu',):
+            if tender.type in ('aboveThresholdEu', 'defense'):
                 f('#itemsDescriptionEN{}{}'.format(i, j)).set_value(item.description_en)
             f('#itemsQuantity{}{}'.format(i, j)).set_value(item.quantity)
             fs('#itemsUnit{}{} div:nth-of-type(1) > input'.format(i, j))[0].set_value(
@@ -163,13 +163,13 @@ def wait_for_export(tender):
 
 
 @pytest.allure.step
-def add_bids(tender, procedure):
+def add_bids(tender):
     until_not(f('.blockUI'), present)
     f('li:nth-child(2) > span').click()
     for i, lot in enumerate(tender.lots):
         until_not(f('.blockUI'), present)
         f('#bidAmount_{}'.format(i)).set_value(lot.lot_value * 0.95 // 1)
-        if procedure != 'belowThreshold':
+        if tender.type != 'belowThreshold':
             f('#selfEligible').click() #_{}'.format(i)
             f('#selfQualified').click()
         f('#createBid_{}'.format(i)).click()

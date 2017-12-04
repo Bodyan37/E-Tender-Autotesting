@@ -106,6 +106,7 @@ class Tender:
         self.features = [Feature()]
         self.classification = Classification()  # TODO different for items
         self.tender_id = ''
+        self.type = None
 
 
 if __name__ == '__main__':
