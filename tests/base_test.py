@@ -43,6 +43,7 @@ class BaseViewerTest(BaseTest):
 
     def test_lots_title(self, tender):
         if tender.is_multilot:
+            f('#openAllLots').click()
             for i, lot in enumerate(tender.lots):
                 assert lot.title in f('#lotTitle_{}'.format(i)).get_attribute("title")
 

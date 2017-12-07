@@ -168,7 +168,7 @@ def add_bids(tender):
     f('li:nth-child(2) > span').click()
     for i, lot in enumerate(tender.lots):
         until_not(f('.blockUI'), present)
-        f('#bidAmount_{}'.format(i)).set_value(lot.lot_value * 0.95 // 1)
+        f('#amount{}'.format(i)).set_value(lot.lot_value * 0.95 // 1)
         if tender.type != 'belowThreshold':
             f('#selfEligible').click() #_{}'.format(i)
             f('#selfQualified').click()
