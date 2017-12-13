@@ -1,15 +1,13 @@
-from selenium import webdriver
-
 browser = None
 wait = None
 tender = None
 timeout = 10
-tender_params = {'is_multilot': True,
-                 'vat': True,
+tender_params = {'is_multilot': False,
+                 'vat': False,
                  'lots': 1,
-                 'items': 2,
-                 'hours': 1,
-                 'minutes': 0
+                 'items': 1,
+                 'hours': 0,
+                 'minutes': 40
 }
 max_import_time = 240
 path = "http://40.69.95.23/#/"

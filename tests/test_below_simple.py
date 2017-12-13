@@ -1,9 +1,5 @@
-from datetime import datetime
 from tests.base_test import *
-from core.conditions import *
 from core.config import max_import_time
-
-procedure = 'belowThreshold'
 
 
 class TestTenderOwner(BaseTest):
@@ -12,9 +8,7 @@ class TestTenderOwner(BaseTest):
     def test_create_tender(self, tender):
         tender.type = 'belowThreshold'
         login('owner')
-        go_to_create(tender.type)
-        fill_tender(tender)
-        f('#createTender').assure(clickable).click()
+        create_tender(tender)
         tender.url = get_url()
         assert wait_for_export(tender), "Tender did not export in 5 minutes"
 

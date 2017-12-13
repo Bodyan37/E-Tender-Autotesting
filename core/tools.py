@@ -50,6 +50,10 @@ def until(locator, condition):
     return locator
 
 
+def scroll_to_bottom():
+    config.browser.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+
+
 @pytest.allure.step
 def fill_tender(tender):
     if tender.is_multilot:
@@ -87,11 +91,18 @@ def login(user):
     f('#inputUsername').set_value(users[user])
     f('#inputPassword').set_value('Qq123456')
     f('#btn_submit').click()
-    until_not(f('.blockUI'), present)
+    #until_not(f('.blockUI'), present)
     try:
         f('#i_got_it').click()  # skip news
     except:
         pass
+
+
+@pytest.allure.step
+def create_tender(tender):
+    go_to_create(tender.type)
+    fill_tender(tender)
+    press_create()
 
 
 @pytest.allure.step
@@ -148,6 +159,11 @@ def go_to_create(procedure):
     f('a[data-target="#procedureType"]').assure(clickable).click()
     Select(f('#chooseProcedureType')).select_by_visible_text(tender_types[procedure])
     f('#goToCreate').click()
+
+
+def press_create():
+    scroll_to_bottom()
+    f('#createTender').assure(clickable).click()
 
 
 @pytest.allure.step
