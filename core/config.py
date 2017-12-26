@@ -9,7 +9,7 @@ tender_params = {'is_multilot': False,
                  'hours': 0,
                  'minutes': 40
 }
-max_import_time = 240
+max_import_time = 300
 path = "http://40.69.95.23/#/"
 #path = "http://192.168.103.42/#/"
 #path = "http://localhost:6234/#/"

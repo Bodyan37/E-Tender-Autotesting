@@ -6,6 +6,22 @@ class BaseTest(object):
     pass
 
 
+class BaseOwnerTest(BaseTest):
+
+    @pytest.mark.dependency(name="create")
+    def test_create_tender(self, tender):
+        tender.type = self.tender_type
+        login('owner')
+        create_tender(tender)
+        tender.url = get_url()
+        assert wait_for_export(tender), "Tender did not export in 5 minutes"
+
+    @pytest.mark.dependency(depends=["create"])
+    def test_tender_search(self, tender):
+        assert search_tender(tender)
+
+
+@pytest.mark.dependency(depends=["create"])
 class BaseViewerTest(BaseTest):
     def test_tender_search(self, tender):
         login('viewer')
@@ -127,3 +143,7 @@ class BaseViewerTest(BaseTest):
             for j, item in enumerate(lot.items):
                 assert str(item.quantity) in f('#item_quantity_{}{}'.format(i, j)).text
 
+
+@pytest.mark.dependency(depends=["create"])
+class BaseProviderTest(BaseTest):
+    pass
