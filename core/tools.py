@@ -126,7 +126,8 @@ def fill_lots(tender):
             f('#addLot_').click()
             f('#lotTitle{}'.format(i)).set_value(lot.title)
             f('#lotDescription{}'.format(i)).set_value(lot.description)
-        # TODO Guarantee
+        Select(f('#guarantee_{}'.format(i))).select_by_index(1)
+        f('#lotGuarantee_{}'.format(i)).set_value(lot.guarantee)
         f('#lotValue_{}'.format(i)).set_value(lot.lot_value)
         f('#minimalStep_{}'.format(i)).set_value(lot.minimal_step)
         # TODO Features

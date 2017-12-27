@@ -85,6 +85,7 @@ class Lot:
         self.minimal_step = round(random.uniform(0.005, 0.03) * self.lot_value, 2)
         self.items = [Item() for _ in range(0, items)]
         self.features = [Feature()]
+        self.guarantee = round(random.uniform(3000, 4999999999.99), 2)
 
 
 class Tender:
