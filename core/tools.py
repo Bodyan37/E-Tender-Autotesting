@@ -9,6 +9,7 @@ import pytest
 import time
 import re
 
+
 def spacify(s):
     s = str(s)
     return (''.join([' ' + n if i % 3 == 2 else n
@@ -51,6 +52,10 @@ def until(locator, condition):
 
 def scroll_to_bottom():
     config.browser.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+
+
+def open_all_lots():
+    f('#openAllLots').click()
 
 
 @pytest.allure.step
@@ -182,6 +187,8 @@ def wait_for_export(tender):
 def add_bids(tender):
     until_not(f('.blockUI'), present)
     f('li:nth-child(2) > span').click()
+    until_not(f('.blockUI'), present)
+    open_all_lots()
     for i, lot in enumerate(tender.lots):
         until_not(f('.blockUI'), present)
         f('#amount{}'.format(i)).set_value(lot.lot_value * 0.95 // 1)

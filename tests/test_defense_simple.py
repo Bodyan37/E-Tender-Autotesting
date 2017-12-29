@@ -13,22 +13,11 @@ class TestViewerSuite(BaseViewerTest):
 
 
 class TestProviderSuite(BaseProviderTest):
-    def test_tender_search(self, tender):
-        login('provider')
-        assert search_tender(tender)
-
-    def test_add_bid(self, tender):
-        add_bids(tender)
+    pass
 
 
 class TestProviderSuite2(BaseProviderTest):
-    def test_tender_search(self, tender):
-        login('provider2')
-        assert search_tender(tender)
-
-    def test_add_bid(self, tender):
-        add_bids(tender)
-
+    user = 'provider2'
 
 if __name__ == '__main__':
     pass

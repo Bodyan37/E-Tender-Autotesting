@@ -7,11 +7,14 @@ class BaseTest(object):
 
 
 class BaseOwnerTest(BaseTest):
+    user = 'owner'
+
+    def test_login(self):
+        login(self.user)
 
     @pytest.mark.dependency(name="create")
     def test_create_tender(self, tender):
         tender.type = self.tender_type
-        login('owner')
         create_tender(tender)
         tender.url = get_url()
         assert wait_for_export(tender), "Tender did not export in 5 minutes"
@@ -23,8 +26,12 @@ class BaseOwnerTest(BaseTest):
 
 @pytest.mark.dependency(depends=["create"])
 class BaseViewerTest(BaseTest):
+    user = 'viewer'
+
+    def test_login(self):
+        login(self.user)
+
     def test_tender_search(self, tender):
-        login('viewer')
         assert search_tender(tender)
         assert get_url() == tender.url
 
@@ -59,7 +66,7 @@ class BaseViewerTest(BaseTest):
 
     def test_lots_title(self, tender):
         if tender.is_multilot:
-            f('#openAllLots').click()
+            open_all_lots()
             for i, lot in enumerate(tender.lots):
                 assert lot.title in f('#lotTitle_{}'.format(i)).get_attribute("title")
 
@@ -152,4 +159,13 @@ class BaseViewerTest(BaseTest):
 
 @pytest.mark.dependency(depends=["create"])
 class BaseProviderTest(BaseTest):
-    pass
+    user = 'provider'
+
+    def test_login(self):
+        login(self.user)
+
+    def test_tender_search(self, tender):
+        assert search_tender(tender)
+
+    def test_add_bid(self, tender):
+        add_bids(tender)
