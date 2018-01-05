@@ -98,7 +98,7 @@ class Tender:
         self.description = fake.sentence()
         self.currency = Currency(random.choice(list(currencies.keys())))
         self.vat = vat
-        self.lots = [Lot(items) for _ in range(0, lots)]
+        self.lots = [Lot(items) for _ in range(0, lots if is_multilot else 1)]
         self.budget = sum([lot.lot_value for lot in self.lots])
         start_date = datetime.now() + timedelta(minutes=10)
         end_date = start_date + timedelta(hours=hours, minutes=minutes)
