@@ -2,9 +2,9 @@ browser = None
 wait = None
 tender = None
 timeout = 10
-tender_params = {'is_multilot': True,
+tender_params = {'is_multilot': False,
                  'vat': False,
-                 'lots': 2,
+                 'lots': 1,
                  'items': 1,
                  'hours': 0,
                  'minutes': 40

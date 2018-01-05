@@ -32,7 +32,7 @@ def get_source():
     return config.browser.page_source
 
 
-def f(locator):
+def f(locator: object) -> object:
     return SmartElement(locator)
 
 
@@ -60,7 +60,7 @@ def open_all_lots():
 
 @pytest.allure.step
 def fill_tender(tender):
-    if tender.is_multilot:
+    if tender.is_multilot and tender.type != 'reporting':
         f('#isMultilots').click()
     f('#title').set_value(tender.title)
     if tender.type in ('aboveThresholdEu',):
@@ -131,10 +131,11 @@ def fill_lots(tender):
             f('#addLot_').click()
             f('#lotTitle{}'.format(i)).set_value(lot.title)
             f('#lotDescription{}'.format(i)).set_value(lot.description)
-        Select(f('#guarantee_{}'.format(i))).select_by_index(1)
-        f('#lotGuarantee_{}'.format(i)).set_value(lot.guarantee)
         f('#lotValue_{}'.format(i)).set_value(lot.lot_value)
-        f('#minimalStep_{}'.format(i)).set_value(lot.minimal_step)
+        if tender.type != 'reporting':
+            f('#minimalStep_{}'.format(i)).set_value(lot.minimal_step)
+            Select(f('#guarantee_{}'.format(i))).select_by_index(1)
+            f('#lotGuarantee_{}'.format(i)).set_value(lot.guarantee)
         # TODO Features
         for j, item in enumerate(lot.items):
             f('#addLotItem_{}'.format(i)).click()
