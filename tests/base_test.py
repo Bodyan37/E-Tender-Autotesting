@@ -1,6 +1,4 @@
 from core.tools import *
-import allure
-import json
 
 
 @pytest.mark.usefixtures("setup")
@@ -20,7 +18,6 @@ class BaseOwnerTest(BaseTest):
         create_tender(tender)
         tender.url = get_url()
         assert wait_for_export(tender), "Tender did not export in 5 minutes"
-        allure.attach('tender', json.dumps(tender, default=lambda o: o.__dict__))
 
     @pytest.mark.dependency(depends=["create"])
     def test_tender_search(self, tender):
