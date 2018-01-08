@@ -11,7 +11,7 @@ import re
 
 
 def spacify(s):
-    s = str(s)
+    s = str(round(s, 2))
     return (''.join([' ' + n if i % 3 == 2 else n
                      for i, n in enumerate(s[:s.index('.')][::-1])][::-1]) + s[s.index('.'):]).lstrip().replace('.', ',')
 
