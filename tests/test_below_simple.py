@@ -20,7 +20,7 @@ class TestViewerSuite(BaseViewerTest):
 class TestProviderSuite(BaseProviderTest):
 
     def test_add_bid(self, tender):
-        if tender.tender_period.start.datetime < time.time():
+        if time.time() < tender.tender_period.start.datetime:
             time.sleep(tender.tender_period.start.datetime - time.time() + max_import_time)
             refresh()
         add_bids(tender)

@@ -99,6 +99,8 @@ class BaseViewerTest(BaseTest):
         if tender.is_multilot:
             for i, lot in enumerate(tender.lots):
                 assert spacify(lot.guarantee) in f('#lotGuarantee_{}'.format(i)).text
+
+    def test_tender_guarantee(self, tender):
         assert spacify(sum([i.guarantee for i in tender.lots])) in f('#tenderGuarantee').text
 
     def test_items_description(self, tender):

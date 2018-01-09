@@ -3,6 +3,8 @@ from selenium import webdriver
 from selenium.webdriver.support.ui import WebDriverWait
 from core.tender import Tender
 from core import config
+import allure
+import json
 
 
 @pytest.fixture(scope='class')
@@ -18,8 +20,13 @@ def setup(request):
 
 
 @pytest.fixture(scope="module", autouse=True)
-def create_tender():
+def create_tender(request):
     config.tender = Tender(**config.tender_params)
+
+    def teardown():
+        allure.attach('tender', json.dumps(config.tender, default=lambda o: o.__dict__))
+
+    request.addfinalizer(teardown)
 
 
 @pytest.fixture
