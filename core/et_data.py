@@ -101,6 +101,8 @@ users = {
     'provider2': 'auto_provider2'
 }
 
+reporting = 'reporting'
+
 if __name__ == '__main__':
     for i in regions:
         print("'{}':[],".format(i))

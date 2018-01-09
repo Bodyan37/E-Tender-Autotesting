@@ -4,7 +4,7 @@ from core import config
 from core.config import path
 from core.elements import SmartElement, SmartElementsCollection
 from core.conditions import present, clickable
-from core.et_data import users, tender_types
+from core.et_data import users, tender_types, reporting
 import pytest
 import time
 import re
@@ -60,7 +60,7 @@ def open_all_lots():
 
 @pytest.allure.step
 def fill_tender(tender):
-    if tender.is_multilot and tender.type != 'reporting':
+    if tender.is_multilot and tender.type != reporting:
         f('#isMultilots').click()
     f('#title').set_value(tender.title)
     if tender.type in ('aboveThresholdEu',):
@@ -71,7 +71,8 @@ def fill_tender(tender):
         fs('#valueAddedTaxIncluded')[-1].click()
     # TODO Features
     fill_lots(tender)
-    fill_tender_periods(tender.tender_period, tender.type)
+    if tender.type != reporting:
+        fill_tender_periods(tender.tender_period, tender.type)
 
 
 @pytest.allure.step
@@ -132,7 +133,7 @@ def fill_lots(tender):
             f('#lotTitle{}'.format(i)).set_value(lot.title)
             f('#lotDescription{}'.format(i)).set_value(lot.description)
         f('#lotValue_{}'.format(i)).set_value(lot.lot_value)
-        if tender.type != 'reporting':
+        if tender.type != reporting:
             f('#minimalStep_{}'.format(i)).set_value(lot.minimal_step)
             Select(f('#guarantee_{}'.format(i))).select_by_index(1)
             f('#lotGuarantee_{}'.format(i)).set_value(lot.guarantee)

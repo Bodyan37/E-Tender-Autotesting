@@ -2,7 +2,7 @@ from tests.base_test import  *
 
 
 class TestOwnerSuite(BaseOwnerTest):
-    tender_type = 'reporting'
+    tender_type = reporting
 
 
 # class TestViewerSuite(BaseViewerTest):
