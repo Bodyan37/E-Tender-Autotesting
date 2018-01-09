@@ -32,7 +32,7 @@ def get_source():
     return config.browser.page_source
 
 
-def f(locator: object) -> object:
+def f(locator):
     return SmartElement(locator)
 
 
