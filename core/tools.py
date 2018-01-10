@@ -4,7 +4,7 @@ from core import config
 from core.config import path
 from core.elements import SmartElement, SmartElementsCollection
 from core.conditions import present, clickable
-from core.et_data import users, tender_types, reporting
+from core.et_data import users, tender_types, reporting, negotiation, negotiation_quick
 import pytest
 import time
 import re
@@ -60,8 +60,10 @@ def open_all_lots():
 
 @pytest.allure.step
 def fill_tender(tender):
-    if tender.is_multilot and tender.type != reporting:
-        f('#isMultilots').click()
+    if tender.type != reporting:
+        if tender.is_multilot:
+            f('#isMultilots').click()
+        fill_tender_periods(tender.tender_period, tender.type)
     f('#title').set_value(tender.title)
     if tender.type in ('aboveThresholdEu',):
         f('#titleEN').set_value(tender.title_en)
@@ -71,14 +73,15 @@ def fill_tender(tender):
         fs('#valueAddedTaxIncluded')[-1].click()
     # TODO Features
     fill_lots(tender)
-    if tender.type != reporting:
-        fill_tender_periods(tender.tender_period, tender.type)
 
 
 @pytest.allure.step
 def search_tender(tender):
     visit(path)
+    if tender.type in (reporting, negotiation, negotiation_quick):
+        f('#naviTitle1').click()
     f('div.row-search input').set_value(tender.tender_id).press_enter()
+
     until_not(f('.blockUI'), present)
     if tender.title in get_source():
         f('#container a.tender-table-title.ng-binding').click()

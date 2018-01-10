@@ -8,9 +8,6 @@ class TestOwnerSuite(BaseOwnerTest):
 # class TestViewerSuite(BaseViewerTest):
 #     pass
 
-# class TestProviderTest(BaseProviderTest):
-#    pass
-
 
 if '__name_' == '__main__':
     pass
