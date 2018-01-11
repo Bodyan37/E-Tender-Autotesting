@@ -96,6 +96,12 @@ tender_types = {
     'negotiation': 'Переговорна процедура',
     'negotiationQuick': 'Переговорна процедура скорочена'
 }
+
+
+reporting = 'reporting'
+negotiation = 'negotiation'
+negotiation_quick = 'negotiation.quick'
+
 users = {
     'owner': 'auto_owner',
     'viewer': 'auto_viewer',
@@ -103,9 +109,6 @@ users = {
     'provider2': 'auto_provider2'
 }
 
-reporting = 'reporting'
-negotiation = 'negotiation'
-negotiation_quick = 'negotiation.quick'
 
 if __name__ == '__main__':
     for i in regions:

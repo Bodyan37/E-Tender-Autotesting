@@ -65,6 +65,8 @@ def fill_tender(tender):
     f('#title').set_value(tender.title)
     if tender.type in ('aboveThresholdEu',):
         f('#titleEN').set_value(tender.title_en)
+    if tender.type in (negotiation, negotiation_quick):
+
     f('#description').set_value(tender.description)
     Select(f('#currency')).select_by_visible_text(tender.currency.name)
     if tender.vat:
@@ -114,7 +116,7 @@ def create_tender(tender):
 @pytest.allure.step
 def fill_tender_periods(period, procedure):
     if procedure in (reporting, negotiation, negotiation_quick):
-        return
+        return None
     if procedure == 'belowThreshold':
         f('#enquiryPeriod').set_value(period.start.date)
         f('#enquiryPeriod_time').set_value(period.start.time)
@@ -177,7 +179,7 @@ def press_create():
 
 def check_multilots(tender):
     if tender.type == reporting:
-        return
+        return None
     if tender.is_multilot:
         f('#isMultilots').click()
 

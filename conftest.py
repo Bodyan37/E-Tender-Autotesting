@@ -16,7 +16,7 @@ def setup(request):
     def teardown():
         config.browser.quit()
 
-    request.addfinalizer(teardown)
+    #request.addfinalizer(teardown)
 
 
 @pytest.fixture(scope="module", autouse=True)
