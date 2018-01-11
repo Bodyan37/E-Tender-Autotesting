@@ -60,10 +60,8 @@ def open_all_lots():
 
 @pytest.allure.step
 def fill_tender(tender):
-    if tender.type != reporting:
-        if tender.is_multilot:
-            f('#isMultilots').click()
-        fill_tender_periods(tender.tender_period, tender.type)
+    check_multilots(tender)
+    fill_tender_periods(tender.tender_period, tender.type)
     f('#title').set_value(tender.title)
     if tender.type in ('aboveThresholdEu',):
         f('#titleEN').set_value(tender.title_en)
@@ -115,6 +113,8 @@ def create_tender(tender):
 
 @pytest.allure.step
 def fill_tender_periods(period, procedure):
+    if procedure in (reporting, negotiation, negotiation_quick):
+        return
     if procedure == 'belowThreshold':
         f('#enquiryPeriod').set_value(period.start.date)
         f('#enquiryPeriod_time').set_value(period.start.time)
@@ -136,7 +136,7 @@ def fill_lots(tender):
             f('#lotTitle{}'.format(i)).set_value(lot.title)
             f('#lotDescription{}'.format(i)).set_value(lot.description)
         f('#lotValue_{}'.format(i)).set_value(lot.lot_value)
-        if tender.type != reporting:
+        if tender.type not in (reporting, negotiation, negotiation_quick):
             f('#minimalStep_{}'.format(i)).set_value(lot.minimal_step)
             Select(f('#guarantee_{}'.format(i))).select_by_index(1)
             f('#lotGuarantee_{}'.format(i)).set_value(lot.guarantee)
@@ -175,6 +175,11 @@ def press_create():
     scroll_to_bottom()
     f('#createTender').assure(clickable).click()
 
+def check_multilots(tender):
+    if tender.type == reporting:
+        return
+    if tender.is_multilot:
+        f('#isMultilots').click()
 
 @pytest.allure.step
 def wait_for_export(tender):

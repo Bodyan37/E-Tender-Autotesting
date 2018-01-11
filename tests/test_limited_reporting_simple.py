@@ -9,5 +9,5 @@ class TestOwnerSuite(BaseOwnerTest):
 #     pass
 
 
-if '__name_' == '__main__':
+if __name__ == '__main__':
     pass
