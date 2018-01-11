@@ -81,11 +81,11 @@ class Lot:
     def __init__(self, items=1):
         self.title = '{}-{}: {}'.format('l', fake.uuid4()[:8], fake.sentence())
         self.description = fake.sentence()
-        self.lot_value = round(random.uniform(3000, 4999999999.99), 2)
+        self.lot_value = random.randint(3000, 4999999999)
         self.minimal_step = round(random.uniform(0.005, 0.03) * self.lot_value, 2)
         self.items = [Item() for _ in range(0, items)]
         self.features = [Feature()]
-        self.guarantee = round(random.uniform(3000, 4999999.99), 2)
+        self.guarantee = random.randint(3000, 49999999)
 
 
 class Tender:
