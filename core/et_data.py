@@ -92,7 +92,9 @@ tender_types = {
     'defense': 'Переговорна процедура для потреб оборони',
     'competitiveDialogue': 'Конкурентний діалог',
     'competitiveDialogueEu': 'Конкурентний діалог з публікацією на англ. мовою',
-    'reporting': 'Звіт про укладений договір'
+    'reporting': 'Звіт про укладений договір',
+    'negotiation': 'Переговорна процедура',
+    'negotiationQuick': 'Переговорна процедура скорочена'
 }
 users = {
     'owner': 'auto_owner',
