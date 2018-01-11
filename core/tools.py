@@ -1,13 +1,16 @@
+from faker.generator import random
 from selenium.common.exceptions import ElementNotVisibleException, TimeoutException
 from selenium.webdriver.support.ui import Select
 from core import config
 from core.config import path
 from core.elements import SmartElement, SmartElementsCollection
 from core.conditions import present, clickable
-from core.et_data import users, tender_types, reporting, negotiation, negotiation_quick
+from core.et_data import users, tender_types, reporting, negotiation, negotiation_quick, tender_cause
 import pytest
 import time
 import re
+
+from core.tender import Cause
 
 
 def spacify(s):
@@ -63,11 +66,11 @@ def fill_tender(tender):
     check_multilots(tender)
     fill_tender_periods(tender.tender_period, tender.type)
     f('#title').set_value(tender.title)
+    f('#description').set_value(tender.description)
     if tender.type in ('aboveThresholdEu',):
         f('#titleEN').set_value(tender.title_en)
     if tender.type in (negotiation, negotiation_quick):
-
-    f('#description').set_value(tender.description)
+        set_cause(tender)
     Select(f('#currency')).select_by_visible_text(tender.currency.name)
     if tender.vat:
         fs('#valueAddedTaxIncluded')[-1].click()
@@ -168,6 +171,7 @@ def fill_lots(tender):
 
 
 def go_to_create(procedure):
+    until_not(f('.blockUI'), present)
     f('a[data-target="#procedureType"]').assure(clickable).click()
     Select(f('#chooseProcedureType')).select_by_visible_text(tender_types[procedure])
     f('#goToCreate').click()
@@ -182,6 +186,14 @@ def check_multilots(tender):
         return None
     if tender.is_multilot:
         f('#isMultilots').click()
+
+def set_cause(tender):
+    #if tender.type == negotiation_quick:
+#tender.cause = Cause(random.choice(list(tender_cause.keys() if tender_cause != 'quick')))
+    tender.cause = Cause(random.choice(list(tender_cause.keys())))
+    Select(f('#cause')).select_by_value(tender.cause.name)
+    f('#causeDescription').set_value(tender.cause_description)
+
 
 @pytest.allure.step
 def wait_for_export(tender):

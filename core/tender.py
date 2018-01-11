@@ -60,6 +60,13 @@ class Feature:
         self.description = fake.sentence()
         self.options = [Option(1), Option(4)]
 
+class Cause:
+
+    def __init__(self, name=None):
+        self.cause = tender_cause[name]
+        self.name = name
+        #self.cause_description = None
+
 
 class Item:
 
@@ -108,6 +115,8 @@ class Tender:
         self.classification = Classification()  # TODO different for items
         self.tender_id = ''
         self.type = None
+        self.cause = None
+        self.cause_description = fake.sentence()
 
 
 if __name__ == '__main__':

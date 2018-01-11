@@ -108,7 +108,15 @@ users = {
     'provider': 'auto_provider1',
     'provider2': 'auto_provider2'
 }
-
+tender_cause = {
+    'artContestIP': 'ст.35 ч. 2 п. 1',
+    'noCompetition': 'ст.35 ч. 2 п. 2',
+    'quick': 'ст.35 ч. 2 п. 3',
+    'twiceUnsuccessful': 'ст.35 ч. 2 п. 4',
+    'additionalPurchase': 'ст.35 ч. 2 п. 5',
+    'additionalConstruction': 'ст.35 ч. 2 п. 6',
+    'stateLegalServices': 'ст.35 ч. 2 п. 7'
+}
 
 if __name__ == '__main__':
     for i in regions:
