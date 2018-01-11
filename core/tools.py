@@ -78,10 +78,10 @@ def fill_tender(tender):
 @pytest.allure.step
 def search_tender(tender):
     visit(path)
+    until_not(f('.blockUI'), present)
     if tender.type in (reporting, negotiation, negotiation_quick):
-        f('#naviTitle1').click()
+        f('#naviTitle1').assure(clickable).click()
     f('div.row-search input').set_value(tender.tender_id).press_enter()
-
     until_not(f('.blockUI'), present)
     if tender.title in get_source():
         f('#container a.tender-table-title.ng-binding').click()
