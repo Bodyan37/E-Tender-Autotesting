@@ -6,10 +6,9 @@ from core.config import path
 from core.elements import SmartElement, SmartElementsCollection
 from core.conditions import present, clickable
 from core.et_data import users, tender_types, reporting, negotiation, negotiation_quick, tender_cause
-import pytest
+import allure
 import time
 import re
-
 from core.tender import Cause
 
 
@@ -61,7 +60,7 @@ def open_all_lots():
     f('#openAllLots').click()
 
 
-@pytest.allure.step
+@allure.step
 def fill_tender(tender):
     check_multilots(tender)
     fill_tender_periods(tender.tender_period, tender.type)
@@ -78,7 +77,7 @@ def fill_tender(tender):
     fill_lots(tender)
 
 
-@pytest.allure.step
+@allure.step
 def search_tender(tender):
     visit(path)
     until_not(f('.blockUI'), present)
@@ -92,7 +91,8 @@ def search_tender(tender):
     return False
 
 
-@pytest.allure.step
+
+@allure.step
 def login(user):
     visit(path)
     try:
@@ -109,14 +109,14 @@ def login(user):
         pass
 
 
-@pytest.allure.step
+@allure.step
 def create_tender(tender):
     go_to_create(tender.type)
     fill_tender(tender)
     press_create()
 
 
-@pytest.allure.step
+@allure.step
 def fill_tender_periods(period, procedure):
     if procedure in (reporting, negotiation, negotiation_quick):
         return None
@@ -129,7 +129,7 @@ def fill_tender_periods(period, procedure):
     f('#endDate_time').set_value(period.end.time)
 
 
-@pytest.allure.step
+@allure.step
 def fill_lots(tender):
     if tender.is_multilot:
         f('#lotRemove_0').click()
@@ -195,7 +195,7 @@ def set_cause(tender):
     f('#causeDescription').set_value(tender.cause_description)
 
 
-@pytest.allure.step
+@allure.step
 def wait_for_export(tender):
     for i in range(10):
         time.sleep(30)
@@ -207,7 +207,7 @@ def wait_for_export(tender):
     return False
 
 
-@pytest.allure.step
+@allure.step
 def add_bids(tender):
     until_not(f('.blockUI'), present)
     f('li:nth-child(2) > span').click()

@@ -116,14 +116,3 @@ class Tender:
         self.type = None
         self.cause = None
         self.cause_description = fake.sentence()
-
-
-if __name__ == '__main__':
-    tender = Tender()
-    print([i.lot_value for i in tender.lots])
-    tp = tender.tender_period
-    date = [int(i) for i in tp.start.date.split('-')[::-1]]
-    time = [int(i) for i in tp.start.time.split(':')]
-    print()
-    a = (datetime(*(date+time)) - datetime.now()).total_seconds()
-    print(a)
