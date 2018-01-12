@@ -13,9 +13,10 @@ from core.tender import Cause
 
 
 def spacify(s):
-    s = str(s/1)
+    s = str(s / 1)
     return (''.join([' ' + n if i % 3 == 2 else n
-                     for i, n in enumerate(s[:s.index('.')][::-1])][::-1]) + s[s.index('.'):]).lstrip().replace('.', ',')
+                     for i, n in enumerate(s[:s.index('.')][::-1])][::-1]) + s[s.index('.'):]).lstrip().replace('.',
+                                                                                                                ',')
 
 
 def visit(url):
@@ -45,6 +46,11 @@ def fs(locator):
 def until_not(locator, condition):
     config.wait.until_not(condition(locator))
     return locator
+
+
+def wait_ui():
+    # TODO: refactor
+    until_not(f('.blockUI'), present)
 
 
 def until(locator, condition):
@@ -80,16 +86,15 @@ def fill_tender(tender):
 @allure.step
 def search_tender(tender):
     visit(path)
-    until_not(f('.blockUI'), present)
+    wait_ui()
     if tender.type in (reporting, negotiation, negotiation_quick):
         f('#naviTitle1').assure(clickable).click()
     f('div.row-search input').set_value(tender.tender_id).press_enter()
-    until_not(f('.blockUI'), present)
+    wait_ui()
     if tender.title in get_source():
         f('#container a.tender-table-title.ng-binding').click()
         return True
     return False
-
 
 
 @allure.step
@@ -102,7 +107,7 @@ def login(user):
     f('#inputUsername').set_value(users[user])
     f('#inputPassword').set_value('Qq123456')
     f('#btn_submit').click()
-    #until_not(f('.blockUI'), present)
+    # wait_ui()
     try:
         f('#i_got_it').click()  # skip news
     except:
@@ -159,7 +164,7 @@ def fill_lots(tender):
             time.sleep(2.5)
             f('#code').click()
             f('#classification_choose').click()
-            until_not(f('.blockUI'), present)
+            wait_ui()
             f('#delStartDate{}{}'.format(i, j)).set_value(item.delivery_date.start.date)
             f('#delEndDate{}{}'.format(i, j)).set_value(item.delivery_date.end.date)
             Select(f('#region_{}{}'.format(i, j))).select_by_visible_text(
@@ -171,7 +176,7 @@ def fill_lots(tender):
 
 
 def go_to_create(procedure):
-    until_not(f('.blockUI'), present)
+    wait_ui()
     f('a[data-target="#procedureType"]').assure(clickable).click()
     Select(f('#chooseProcedureType')).select_by_visible_text(tender_types[procedure])
     f('#goToCreate').click()
@@ -181,11 +186,13 @@ def press_create():
     scroll_to_bottom()
     f('#createTender').assure(clickable).click()
 
+
 def check_multilots(tender):
     if tender.type == reporting:
         return None
     if tender.is_multilot:
         f('#isMultilots').click()
+
 
 def set_cause(tender):
     if tender.type == negotiation:
@@ -209,14 +216,14 @@ def wait_for_export(tender):
 
 @allure.step
 def add_bids(tender):
-    until_not(f('.blockUI'), present)
+    wait_ui()
     f('li:nth-child(2) > span').click()
-    until_not(f('.blockUI'), present)
+    wait_ui()
     open_all_lots()
     for i, lot in enumerate(tender.lots):
-        until_not(f('.blockUI'), present)
+        wait_ui()
         f('#amount{}'.format(i)).set_value(lot.lot_value * 0.95 // 1)
         if tender.type != 'belowThreshold':
-            f('#selfEligible').click() #_{}'.format(i)
+            f('#selfEligible').click()  # _{}'.format(i)
             f('#selfQualified').click()
         f('#createBid_{}'.format(i)).click()

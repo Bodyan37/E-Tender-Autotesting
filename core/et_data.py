@@ -100,7 +100,7 @@ tender_types = {
 
 reporting = 'reporting'
 negotiation = 'negotiation'
-negotiation_quick = 'negotiation.quick'
+negotiation_quick = 'negotiationQuick'
 
 users = {
     'owner': 'auto_owner',
