@@ -65,7 +65,6 @@ class Cause:
     def __init__(self, name=None):
         self.cause = tender_cause[name]
         self.name = name
-        #self.cause_description = None
 
 
 class Item:

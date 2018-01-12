@@ -188,8 +188,8 @@ def check_multilots(tender):
         f('#isMultilots').click()
 
 def set_cause(tender):
-    #if tender.type == negotiation_quick:
-#tender.cause = Cause(random.choice(list(tender_cause.keys() if tender_cause != 'quick')))
+    if tender.type == negotiation:
+        del tender_cause['quick']
     tender.cause = Cause(random.choice(list(tender_cause.keys())))
     Select(f('#cause')).select_by_value(tender.cause.name)
     f('#causeDescription').set_value(tender.cause_description)
