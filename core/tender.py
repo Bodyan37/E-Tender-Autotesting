@@ -116,3 +116,9 @@ class Tender:
         self.type = None
         self.cause = None
         self.cause_description = fake.sentence()
+
+    def set_type(self, t):
+        self.type = t
+        if t == reporting:
+            self.lots = self.lots[:1]
+            self.budget = self.lots[0].lot_value

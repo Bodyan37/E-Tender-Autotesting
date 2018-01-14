@@ -68,7 +68,8 @@ def open_all_lots():
 
 @allure.step
 def fill_tender(tender):
-    check_multilots(tender)
+    if can_multilots(tender):
+        f('#isMultilots').click()
     fill_tender_periods(tender.tender_period, tender.type)
     f('#title').set_value(tender.title)
     f('#description').set_value(tender.description)
@@ -136,12 +137,12 @@ def fill_tender_periods(period, procedure):
 
 @allure.step
 def fill_lots(tender):
-    if tender.is_multilot:
+    if can_multilots(tender):
         f('#lotRemove_0').click()
     else:
         f('#itemRemove_00').click()
     for i, lot in enumerate(tender.lots):
-        if tender.is_multilot:
+        if can_multilots(tender):
             f('#addLot_').click()
             f('#lotTitle{}'.format(i)).set_value(lot.title)
             f('#lotDescription{}'.format(i)).set_value(lot.description)
@@ -187,11 +188,10 @@ def press_create():
     f('#createTender').assure(clickable).click()
 
 
-def check_multilots(tender):
+def can_multilots(tender):
     if tender.type == reporting:
-        return None
-    if tender.is_multilot:
-        f('#isMultilots').click()
+        return False
+    return tender.is_multilot
 
 
 def set_cause(tender):
@@ -207,8 +207,8 @@ def wait_for_export(tender):
     for i in range(10):
         time.sleep(30)
         refresh()
-        if re.match(r'UA-\d{4}-.*', f('#tenderidua > b').text):
-            tender.tender_id = f('#tenderidua > b').text
+        tender.tender_id = f('#tenderidua > b').text
+        if re.match(r'UA-\d{4}-.*', tender.tender_id):
             tender.url = get_url()
             return True
     return False

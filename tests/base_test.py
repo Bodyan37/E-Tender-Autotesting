@@ -1,5 +1,4 @@
 import pytest
-
 from core.tools import *
 
 
@@ -16,7 +15,7 @@ class BaseOwnerTest(BaseTest):
 
     @pytest.mark.dependency(name="create")
     def test_create_tender(self, tender):
-        tender.type = self.tender_type
+        tender.set_type(self.tender_type)
         create_tender(tender)
         tender.url = get_url()
         assert wait_for_export(tender), "Tender did not export in 5 minutes"
