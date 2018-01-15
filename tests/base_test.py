@@ -61,10 +61,6 @@ class BaseViewerTest(BaseTest):
     def test_tender_owner(self):
         assert 'TenderOwner#' in f('#tenderOwner').text
 
-    def test_tender_period_end(self, tender):
-        t = tender.tender_period.end
-        assert t.date+', '+t.time in f('#tenderEnd').text
-
     def test_lots_title(self, tender):
         if tender.is_multilot:
             open_all_lots()
@@ -91,18 +87,6 @@ class BaseViewerTest(BaseTest):
                 assert f('#lotVatInc_{}'.format(i))
             else:
                 assert f('#lotVatExc_{}'.format(i))
-
-    def test_lots_minimal_step(self, tender):
-        for i, lot in enumerate(tender.lots):
-            assert spacify(lot.minimal_step) in f('#lotMinimalStep_{}'.format(i)).text
-
-    def test_lots_guarantee(self, tender):
-        if tender.is_multilot:
-            for i, lot in enumerate(tender.lots):
-                assert spacify(lot.guarantee) in f('#lotGuarantee_{}'.format(i)).text
-
-    def test_tender_guarantee(self, tender):
-        assert spacify(sum([i.guarantee for i in tender.lots])) in f('#tenderGuarantee').text
 
     def test_items_description(self, tender):
         for i, lot in enumerate(tender.lots):
@@ -158,6 +142,31 @@ class BaseViewerTest(BaseTest):
         for i, lot in enumerate(tender.lots):
             for j, item in enumerate(lot.items):
                 assert str(item.quantity) in f('#item_quantity_{}{}'.format(i, j)).text
+
+
+@pytest.mark.dependency(depends=["create"])
+class BaseViewerOpenTest(BaseViewerTest):
+
+    def test_tender_period_end(self, tender):
+        t = tender.tender_period.end
+        assert t.date+', '+t.time in f('#tenderEnd').text
+
+    def test_lots_minimal_step(self, tender):
+        for i, lot in enumerate(tender.lots):
+            assert spacify(lot.minimal_step) in f('#lotMinimalStep_{}'.format(i)).text
+
+    def test_lots_guarantee(self, tender):
+        if tender.is_multilot:
+            for i, lot in enumerate(tender.lots):
+                assert spacify(lot.guarantee) in f('#lotGuarantee_{}'.format(i)).text
+
+    def test_tender_guarantee(self, tender):
+        assert spacify(sum([i.guarantee for i in tender.lots])) in f('#tenderGuarantee').text
+
+
+@pytest.mark.dependency(depends=["create"])
+class BaseViewerLimitedTest(BaseViewerTest):
+    pass
 
 
 @pytest.mark.dependency(depends=["create"])

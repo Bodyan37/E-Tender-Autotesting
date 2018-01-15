@@ -90,6 +90,7 @@ def search_tender(tender):
     wait_ui()
     if tender.type in (reporting, negotiation, negotiation_quick):
         f('#naviTitle1').assure(clickable).click()
+        wait_ui()
     f('div.row-search input').set_value(tender.tender_id).press_enter()
     wait_ui()
     if tender.title in get_source():
@@ -160,7 +161,7 @@ def fill_lots(tender):
             f('#itemsQuantity{}{}'.format(i, j)).set_value(item.quantity)
             fs('#itemsUnit{}{} div:nth-of-type(1) > input'.format(i, j))[0].set_value(
                 item.unit).press_enter().press_enter()
-            f('#openClassificationModal{}{}'.format(i, j)).click()
+            f('#openClassificationModal{}{}'.format(i, j)).assure(clickable).click()
             f('#classificationCode').assure(clickable).set_value(tender.classification.id)
             time.sleep(2.5)
             f('#code').click()

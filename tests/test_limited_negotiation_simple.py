@@ -4,8 +4,8 @@ class TestOwnerSuite(BaseOwnerTest):
     tender_type = negotiation
 
 
-# class TestViewerSuite(BaseViewerTest):
-#     pass
+class TestViewerSuite(BaseViewerLimitedTest):
+    pass
 
 # class TestProviderSuite(BaseProviderTest):
 #     pass

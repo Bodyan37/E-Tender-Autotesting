@@ -5,7 +5,7 @@ class TestOwnerSuite(BaseOwnerTest):
     tender_type = negotiation_quick
 
 
-class TestViewerSuite(BaseViewerTest):
+class TestViewerSuite(BaseViewerLimitedTest):
     pass
 
 

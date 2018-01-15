@@ -5,7 +5,7 @@ class TestOwnerSuite(BaseOwnerTest):
     tender_type = reporting
 
 
-class TestViewerSuite(BaseViewerTest):
+class TestViewerSuite(BaseViewerLimitedTest):
     pass
 
 
