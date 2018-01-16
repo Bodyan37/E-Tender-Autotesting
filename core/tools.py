@@ -58,8 +58,9 @@ def until(locator, condition):
     return locator
 
 
-def scroll_to_bottom():
-    config.browser.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+def scroll_to(pos):
+    config.browser.execute_script("window.scrollTo(0, {});".format("document.body.scrollHeight"
+                                                                   if pos == "bottom" else "0"))
 
 
 def open_all_lots():
@@ -88,6 +89,7 @@ def fill_tender(tender):
 def search_tender(tender):
     visit(path)
     wait_ui()
+    scroll_to('top')
     if tender.type in (reporting, negotiation, negotiation_quick):
         f('#naviTitle1').assure(clickable).click()
         wait_ui()
@@ -185,7 +187,7 @@ def go_to_create(procedure):
 
 
 def press_create():
-    scroll_to_bottom()
+    scroll_to('bottom')
     f('#createTender').assure(clickable).click()
 
 
