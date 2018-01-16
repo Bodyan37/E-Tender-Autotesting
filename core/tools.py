@@ -158,7 +158,7 @@ def fill_lots(tender):
         for j, item in enumerate(lot.items):
             f('#addLotItem_{}'.format(i)).click()
             f('#itemsDescription{}{}'.format(i, j)).set_value(item.description)
-            if tender.type in ('aboveThresholdEu', 'defense'):
+            if tender.type in ('aboveThresholdEu', 'defense', 'competitiveDialogueUa'):
                 f('#itemsDescriptionEN{}{}'.format(i, j)).set_value(item.description_en)
             f('#itemsQuantity{}{}'.format(i, j)).set_value(item.quantity)
             fs('#itemsUnit{}{} div:nth-of-type(1) > input'.format(i, j))[0].set_value(

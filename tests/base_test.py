@@ -62,13 +62,13 @@ class BaseViewerTest(BaseTest):
         assert 'TenderOwner#' in f('#tenderOwner').text
 
     def test_lots_title(self, tender):
-        if tender.is_multilot:
+        if tender.is_multilot and tender.type != reporting:
             open_all_lots()
             for i, lot in enumerate(tender.lots):
                 assert lot.title in f('#lotTitle_{}'.format(i)).get_attribute("title")
 
     def test_lots_description(self, tender):
-        if tender.is_multilot:
+        if tender.is_multilot and tender.type != reporting:
             for i, lot in enumerate(tender.lots):
                 assert lot.description in f('#lotDescription_{}'.format(i)).text
 
