@@ -94,13 +94,15 @@ tender_types = {
     'competitiveDialogueEu': 'Конкурентний діалог з публікацією на англ. мовою',
     'reporting': 'Звіт про укладений договір',
     'negotiation': 'Переговорна процедура',
-    'negotiationQuick': 'Переговорна процедура скорочена'
+    'negotiationQuick': 'Переговорна процедура скорочена',
+    'competitiveDialogueUa': 'Конкурентний діалог'
 }
 
 
 reporting = 'reporting'
 negotiation = 'negotiation'
 negotiation_quick = 'negotiationQuick'
+competitive_dialogue_ua = 'competitiveDialogueUa'
 
 users = {
     'owner': 'auto_owner',
