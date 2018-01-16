@@ -88,14 +88,14 @@ regions = {
 tender_types = {
     'belowThreshold': 'Допорогові закупівлі',
     'aboveThreshold': 'Відкриті торги',
-    'aboveThresholdEu': 'Відкриті торги з публікацією англ.мовою',
+    'aboveThresholdEu': 'Відкриті торги з публікацією англійською мовою',
     'defense': 'Переговорна процедура для потреб оборони',
-    'competitiveDialogue': 'Конкурентний діалог',
-    'competitiveDialogueEu': 'Конкурентний діалог з публікацією на англ. мовою',
+    'competitiveDialogueUa': 'Конкурентний діалог 1-ий етап',
+    'competitiveDialogueEu': 'Конкурентний діалог з публікацією англійською мовою 1-ий етап',
     'reporting': 'Звіт про укладений договір',
     'negotiation': 'Переговорна процедура',
-    'negotiationQuick': 'Переговорна процедура скорочена',
-    'competitiveDialogueUa': 'Конкурентний діалог'
+    'negotiationQuick': 'Переговорна процедура (скорочена)',
+    'esco': 'Відкриті торги для закупівлі енергосервісу'
 }
 
 
@@ -103,6 +103,7 @@ reporting = 'reporting'
 negotiation = 'negotiation'
 negotiation_quick = 'negotiationQuick'
 competitive_dialogue_ua = 'competitiveDialogueUa'
+competitive_dialogue_eu = 'competitiveDialogueEu'
 
 users = {
     'owner': 'auto_owner',
