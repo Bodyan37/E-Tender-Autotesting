@@ -166,7 +166,12 @@ class BaseViewerOpenTest(BaseViewerTest):
 
 @pytest.mark.dependency(depends=["create"])
 class BaseViewerLimitedTest(BaseViewerTest):
-    pass
+
+    def test_tender_cause(self, tender):
+        assert tender.cause.title in f('#cause').text
+
+    def test_tender_cause_description(self, tender):
+        assert tender.cause_description in  f('#causeDescription').text
 
 
 @pytest.mark.dependency(depends=["create"])

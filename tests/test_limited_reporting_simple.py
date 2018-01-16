@@ -6,7 +6,14 @@ class TestOwnerSuite(BaseOwnerTest):
 
 
 class TestViewerSuite(BaseViewerLimitedTest):
-    pass
+
+    @pytest.mark.skip(reason="Cause: field is absent")
+    def test_tender_cause(self, tender):
+        pass
+
+    @pytest.mark.skip(reason="CauseDescription: field is absent")
+    def test_tender_cause_description(self, tender):
+        pass
 
 
 if __name__ == '__main__':
