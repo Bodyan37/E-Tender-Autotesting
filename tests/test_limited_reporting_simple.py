@@ -1,4 +1,4 @@
-from tests.base_test import  *
+from tests.base_test import *
 
 
 class TestOwnerSuite(BaseOwnerTest):

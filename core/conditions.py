@@ -5,7 +5,6 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 
 
-
 class Condition(object):
 
     def __call__(self, driver):
@@ -111,6 +110,14 @@ class visible(Condition):
 
     def apply(self):
         return self.element.finder().is_displayed()
+
+
+class invisible(Condition):
+    def __init__(self, element):
+        self.element = element
+
+    def apply(self):
+        return EC.invisibility_of_element_located(self.element.finder())
 
 
 class css_class(Condition):

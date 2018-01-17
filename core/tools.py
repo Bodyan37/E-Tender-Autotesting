@@ -1,10 +1,9 @@
 from faker.generator import random
 from selenium.common.exceptions import ElementNotVisibleException, TimeoutException
 from selenium.webdriver.support.ui import Select
-from core import config
 from core.config import path
 from core.elements import SmartElement, SmartElementsCollection
-from core.conditions import present, clickable
+from core.conditions import *
 from core.et_data import users, tender_types, reporting, negotiation, negotiation_quick, tender_cause
 import allure
 import time
@@ -37,6 +36,10 @@ def get_source():
 
 def f(locator):
     return SmartElement(locator)
+
+
+def fc(locator, conditions=None):
+    return SmartElement(locator, conditions=conditions)
 
 
 def fs(locator):
@@ -90,6 +93,7 @@ def search_tender(tender):
     wait_ui()
     if tender.type in (reporting, negotiation, negotiation_quick):
         f('#naviTitle1').assure(clickable).click()
+        wait_ui()
     f('div.row-search input').set_value(tender.tender_id).press_enter()
     wait_ui()
     if tender.title in get_source():

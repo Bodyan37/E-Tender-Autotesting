@@ -40,17 +40,13 @@ class RootSElement(object):
 
 
 class SmartElement(WaitingFinder):
-    def __init__(self, css_selector, context=RootSElement()):
+    def __init__(self, css_selector, context=RootSElement(), conditions=None):
         self.locator = css_selector
         self.context = context
-        self.default_conditions = {visible: []}
+        self.default_conditions = {c: [] for c in conditions} if conditions else {visible: []}
 
     def finder(self):
         return self.context.find_element_by_css_selector(self.locator)
-
-    # def __getattr__(self, item):
-    #     self.assure(visible)
-    #     return getattr(self.finder(), item)
 
     def within(self, context):
         self.context = context
@@ -108,9 +104,6 @@ class SmartElementsCollection(WaitingFinder):
 
     def find(self, condition_class, *condition_args):
         return self.filter(condition_class, *condition_args)[0]
-
-    # def __getattr__(self, item):
-    #     return getattr(self.finder(), item)
 
     def __getitem__(self, item):
         self.assure(size_at_least, item + 1)
