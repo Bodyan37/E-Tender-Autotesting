@@ -4,12 +4,9 @@ class TestOwnerSuite(BaseOwnerTest):
     tender_type = negotiation
 
 
-# class TestViewerSuite(BaseViewerTest):
-#     pass
+class TestViewerSuite(BaseViewerLimitedTest):
+    pass
 
-# class TestProviderSuite(BaseProviderTest):
-#     pass
-
-
+# TODO: add provider claim logic?
 if __name__ == '__main__':
     pass

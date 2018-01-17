@@ -4,7 +4,8 @@ from selenium.webdriver.support.ui import Select
 from core.config import path
 from core.elements import SmartElement, SmartElementsCollection
 from core.conditions import *
-from core.et_data import users, tender_types, reporting, negotiation, negotiation_quick, tender_cause
+from core.et_data import users, tender_types, tender_cause, reporting, negotiation, \
+    negotiation_quick, competitive_dialogue_ua, competitive_dialogue_eu
 import allure
 import time
 import re
@@ -61,8 +62,9 @@ def until(locator, condition):
     return locator
 
 
-def scroll_to_bottom():
-    config.browser.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+def scroll_to(pos):
+    config.browser.execute_script("window.scrollTo(0, {});".format("document.body.scrollHeight"
+                                                                   if pos == "bottom" else "0"))
 
 
 def open_all_lots():
@@ -76,7 +78,7 @@ def fill_tender(tender):
     fill_tender_periods(tender.tender_period, tender.type)
     f('#title').set_value(tender.title)
     f('#description').set_value(tender.description)
-    if tender.type in ('aboveThresholdEu',):
+    if tender.type in ('aboveThresholdEu', competitive_dialogue_eu):
         f('#titleEN').set_value(tender.title_en)
     if tender.type in (negotiation, negotiation_quick):
         set_cause(tender)
@@ -91,6 +93,7 @@ def fill_tender(tender):
 def search_tender(tender):
     visit(path)
     wait_ui()
+    scroll_to('top')
     if tender.type in (reporting, negotiation, negotiation_quick):
         f('#naviTitle1').assure(clickable).click()
         wait_ui()
@@ -159,12 +162,12 @@ def fill_lots(tender):
         for j, item in enumerate(lot.items):
             f('#addLotItem_{}'.format(i)).click()
             f('#itemsDescription{}{}'.format(i, j)).set_value(item.description)
-            if tender.type in ('aboveThresholdEu', 'defense'):
+            if tender.type in ('aboveThresholdEu', 'defense', competitive_dialogue_ua, competitive_dialogue_eu):
                 f('#itemsDescriptionEN{}{}'.format(i, j)).set_value(item.description_en)
             f('#itemsQuantity{}{}'.format(i, j)).set_value(item.quantity)
             fs('#itemsUnit{}{} div:nth-of-type(1) > input'.format(i, j))[0].set_value(
                 item.unit).press_enter().press_enter()
-            f('#openClassificationModal{}{}'.format(i, j)).click()
+            f('#openClassificationModal{}{}'.format(i, j)).assure(clickable).click()
             f('#classificationCode').assure(clickable).set_value(tender.classification.id)
             time.sleep(2.5)
             f('#code').click()
@@ -182,13 +185,14 @@ def fill_lots(tender):
 
 def go_to_create(procedure):
     wait_ui()
+    scroll_to('top')
     f('a[data-target="#procedureType"]').assure(clickable).click()
     Select(f('#chooseProcedureType')).select_by_visible_text(tender_types[procedure])
     f('#goToCreate').click()
 
 
 def press_create():
-    scroll_to_bottom()
+    scroll_to('bottom')
     f('#createTender').assure(clickable).click()
 
 

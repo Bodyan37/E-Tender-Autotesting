@@ -63,8 +63,8 @@ class Feature:
 class Cause:
 
     def __init__(self, name=None):
-        self.cause = tender_cause[name]
         self.name = name
+        self.title = tender_cause[name]
 
 
 class Item:

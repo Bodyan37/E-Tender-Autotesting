@@ -6,7 +6,7 @@ class TestOwnerSuite(BaseOwnerTest):
     tender_type = 'belowThreshold'
 
 
-class TestViewerSuite(BaseViewerTest):
+class TestViewerSuite(BaseViewerOpenTest):
 
     def test_enquiry_period_end(self, tender):
         t = tender.tender_period.start

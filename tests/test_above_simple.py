@@ -5,7 +5,7 @@ class TestOwnerSuite(BaseOwnerTest):
     tender_type = 'aboveThreshold'
 
 
-class TestViewerSuite(BaseViewerTest):
+class TestViewerSuite(BaseViewerOpenTest):
     pass
 
 

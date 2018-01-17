@@ -5,7 +5,7 @@ class TestOwnerSuite(BaseOwnerTest):
     tender_type = 'aboveThresholdEu'
 
 
-class TestViewerSuite(BaseViewerTest):
+class TestViewerSuite(BaseViewerOpenTest):
     def test_items_description_en(self, tender):
         for i, lot in enumerate(tender.lots):
             for j, item in enumerate(lot.items):
