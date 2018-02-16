@@ -4,4 +4,4 @@
 .cache/
 __pycache__/
 allure-results/
-__debug_tests__/*
+__debug_tests__
